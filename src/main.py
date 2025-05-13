@@ -1,3 +1,3 @@
 from textnode import *
 
-print(TextNode("HELLO WORLD", TextType.CODE_TEXT, None))
+print(TextNode("HELLO WORLD", TextType.BOLD_TEXT, None))
