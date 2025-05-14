@@ -20,3 +20,4 @@ class TestHTMLNode(unittest.TestCase):
         # props_to_html should return ""
         props = node1.props_to_html()
         self.assertEqual(props, "")
+
