@@ -10,8 +10,6 @@ class TestLeafNode(unittest.TestCase):
 
     def test_leaf_to_html_p_with_none_text(self):
         node = LeafNode(None, "Hello, world!")
-        print(node.__repr__())
-        print(node.to_html())
         self.assertEqual(node.to_html(), "Hello, world!")
 
     def test_value_error(self):
