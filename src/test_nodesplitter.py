@@ -56,3 +56,29 @@ class TestNodeSplitter(unittest.TestCase):
         with self.assertRaises(Exception) as context:
             new_nodes = split_nodes_delimiter([node], "_", TextType.ITALIC)
         self.assertEqual(str(context.exception), "Matching delimmiter never found, invalid format")
+
+    def test_extract_markdown_images(self):
+        matches = extract_markdown_images(
+            "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png)"
+        )
+        self.assertListEqual([("image", "https://i.imgur.com/zjjcJKZ.png")], matches)
+    
+    def test_extract_markdown_images_with_invalid_format(self):
+        with self.assertRaises(Exception) as context:
+            matches = extract_markdown_images(
+                "This is text with an image"
+            )
+        self.assertEqual(str(context.exception), "Invalid format, no image found")
+    
+    def text_extract_markdown_link(self):
+        matches = extract_markdown_links(
+            "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev"
+        )
+        self.assertListEqual([("to boot dev", "https://www.boot.dev"), ("to youtube", "https://www.youtube.come/@bootdotdev")])
+    
+    def test_extract_markdown_link_with_invalid_format(self):
+        with self.assertRaises(Exception) as context:
+            matches = extract_markdown_links(
+                "This is text with a link"
+            )
+        self.assertEqual(str(context.exception), "Invalid format, no link found")
