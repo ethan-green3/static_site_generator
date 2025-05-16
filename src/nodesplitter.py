@@ -2,6 +2,7 @@ from textnode import *
 def split_nodes_delimiter(old_nodes: TextNode, delimiter: str, text_type: TextType) -> TextNode:
     new_nodes = []
     text = old_nodes[0].text.split()
+    delimmiter_count = text.count(delimiter)
     building_string = ""
     for i in range(len(text)):
         if text[i].startswith(delimiter):
@@ -12,12 +13,14 @@ def split_nodes_delimiter(old_nodes: TextNode, delimiter: str, text_type: TextTy
             remaining_words = remaining_words[i:]
             delimited_string = ""
             for word in remaining_words:
+                found_matching_delimmiter = False
                 if word.endswith(delimiter):
                         # Add final word of delimmited string and append to new nodes list
                         delimited_string += word
                         new_nodes.append(TextNode(f"{delimited_string.replace(delimiter, "")}", text_type))
                         # Reset building string
                         building_string = " "
+                        found_matching_delimmiter = True
                         break
                 # Build delimmited string
                 delimited_string += word + " "
@@ -25,6 +28,8 @@ def split_nodes_delimiter(old_nodes: TextNode, delimiter: str, text_type: TextTy
         if not text[i].startswith(delimiter) and not text[i].endswith(delimiter):
             building_string += text[i] + " "
     # Clear trailing whitespace
+    if found_matching_delimmiter == False:
+         raise Exception("Matching delimmiter never found, invalid format")
     stripped_string = building_string.rstrip()
     new_nodes.append(TextNode(f"{stripped_string}", TextType.TEXT))
 
