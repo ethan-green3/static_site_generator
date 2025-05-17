@@ -38,6 +38,34 @@ def split_nodes_delimiter(old_nodes: TextNode, delimiter: str, text_type: TextTy
     return new_nodes
 
 
+def split_nodes_image(old_nodes):
+    new_nodes = []
+    extracted_images = extract_markdown_images(old_nodes[0].text)
+    extracted_images_counter = 0
+    split_text = old_nodes[0].text.split()
+    building_str = ""
+
+    for i in range(len(split_text)):
+        # Build normal text until image is detected
+        if not split_text[i].startswith("!"):
+            building_str += split_text[i] + " "
+        else:
+            # Append string as TextNode that has been built up to detecting an image
+            new_nodes.append(TextNode(building_str, TextType.TEXT))
+
+            # Attach appropriate alt text and url from list of tuples of images
+            alt_text = extracted_images[extracted_images_counter][0]
+            url = extracted_images[extracted_images_counter][1]
+
+            # Append the new image node, reset the building string and increment the extracted image counter to get the next tuple for next image
+            new_nodes.append(TextNode(alt_text, TextType.IMAGE, url))
+            building_str = " "
+            extracted_images_counter += 1
+
+    return new_nodes
+
+
+
 def extract_markdown_images(text):
      images_regex = r"!\[([^\[\]]*)\]\(([^\(\)]*)\)"
      extracted_image = re.findall(images_regex, text)
