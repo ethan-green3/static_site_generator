@@ -5,10 +5,12 @@ import re
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
     for old_node in old_nodes:
+        # To avoid overwriting previus bold, italic, code nodes to text nodes
         if old_node.text_type != TextType.TEXT:
             new_nodes.append(old_node)
             continue
         
+        # This catches regular text nodes and preserves their text 
         text = old_node.text
         if delimiter not in text:
             new_nodes.append(old_node)
@@ -149,4 +151,17 @@ def extract_markdown_links(text):
     links_regex = r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)"
     extracted_link = re.findall(links_regex, text)   
     return extracted_link
-        
+
+
+def markdown_to_blocks(markdown):
+    # Strip any leading/trailing whitespace from the entire markdown first
+    markdown = markdown.strip()
+    formatted_md = markdown.split("\n\n")
+    blocks = []
+    for block in formatted_md:
+        lines = block.split("\n")
+        clean_lines = [line.strip() for line in lines]
+        clean_block = "\n".join(clean_lines)
+        if clean_block:  # Only add non-empty blocks
+            blocks.append(clean_block)
+    return blocks
