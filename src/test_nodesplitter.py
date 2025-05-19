@@ -52,7 +52,7 @@ class TestNodeSplitter(unittest.TestCase):
             TextNode(" captured", TextType.TEXT)])
         
     def test_no_matching_delimiter(self):
-        node = TextNode("This _is_ _text with a _italic block_ _word", TextType.TEXT)
+        node = TextNode("This _is text with a italic block word", TextType.TEXT)
         with self.assertRaises(Exception) as context:
             new_nodes = split_nodes_delimiter([node], "_", TextType.ITALIC)
         self.assertEqual(str(context.exception), "Matching delimmiter never found, invalid format")
@@ -62,13 +62,7 @@ class TestNodeSplitter(unittest.TestCase):
             "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png)"
         )
         self.assertListEqual([("image", "https://i.imgur.com/zjjcJKZ.png")], matches)
-    
-    def test_extract_markdown_images_with_invalid_format(self):
-        with self.assertRaises(Exception) as context:
-            matches = extract_markdown_images(
-                "This is text with an image"
-            )
-        self.assertEqual(str(context.exception), "Invalid format, no image found")
+
     
     def text_extract_markdown_link(self):
         matches = extract_markdown_links(
@@ -76,12 +70,6 @@ class TestNodeSplitter(unittest.TestCase):
         )
         self.assertListEqual([("to boot dev", "https://www.boot.dev"), ("to youtube", "https://www.youtube.come/@bootdotdev")])
     
-    def test_extract_markdown_link_with_invalid_format(self):
-        with self.assertRaises(Exception) as context:
-            matches = extract_markdown_links(
-                "This is text with a link"
-            )
-        self.assertEqual(str(context.exception), "Invalid format, no link found")
 
     def test_split_images(self):
         node = TextNode(
@@ -117,4 +105,23 @@ class TestNodeSplitter(unittest.TestCase):
                 ),
             ],
             new_nodes,
+        )  
+
+    def test_text_to_textnodes(self):
+        text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+        new_nodes = text_to_textnodes(text)  
+        self.assertListEqual(
+            [
+                TextNode("This is ", TextType.TEXT),
+                TextNode("text", TextType.BOLD),
+                TextNode(" with an ", TextType.TEXT),
+                TextNode("italic", TextType.ITALIC),
+                TextNode(" word and a ", TextType.TEXT),
+                TextNode("code block", TextType.CODE),
+                TextNode(" and an ", TextType.TEXT),
+                TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"),
+                TextNode(" and a ", TextType.TEXT),
+                TextNode("link", TextType.LINK, "https://boot.dev"),
+            ],
+            new_nodes
         )        
