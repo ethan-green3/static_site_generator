@@ -65,6 +65,26 @@ def split_nodes_image(old_nodes):
     return new_nodes
 
 
+def split_nodes_link(old_nodes):
+    new_nodes = []
+    extracted_links = extract_markdown_links(old_nodes[0].text)
+    extracted_link_counter = 0
+    split_text = old_nodes[0].text.split()
+    building_str = ""
+
+    for i in range (len(split_text)):
+        if not split_text[i].startswith("["):
+            building_str += split_text[i] + " "
+        else:
+            new_nodes.append(TextNode(building_str, TextType.TEXT))
+            alt_text = extracted_links[extracted_link_counter][0]
+            url = extracted_links[extracted_link_counter][1]
+            new_nodes.append(TextNode(alt_text, TextType.LINK, url))
+            building_str = " "
+            extracted_link_counter += 1
+    
+    return new_nodes
+
 
 def extract_markdown_images(text):
      images_regex = r"!\[([^\[\]]*)\]\(([^\(\)]*)\)"
