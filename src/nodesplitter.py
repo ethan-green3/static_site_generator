@@ -153,15 +153,3 @@ def extract_markdown_links(text):
     return extracted_link
 
 
-def markdown_to_blocks(markdown):
-    # Strip any leading/trailing whitespace from the entire markdown first
-    markdown = markdown.strip()
-    formatted_md = markdown.split("\n\n")
-    blocks = []
-    for block in formatted_md:
-        lines = block.split("\n")
-        clean_lines = [line.strip() for line in lines]
-        clean_block = "\n".join(clean_lines)
-        if clean_block:  # Only add non-empty blocks
-            blocks.append(clean_block)
-    return blocks
