@@ -1,4 +1,7 @@
 from enum import Enum
+from htmlnode import *
+from nodesplitter import *
+from parentnode import *
 
 class BlockType(Enum):
     PARAGRAPH = 'paragraph'
@@ -17,9 +20,16 @@ def markdown_to_blocks(markdown):
     for block in formatted_md:
         lines = block.split("\n")
         clean_lines = [line.strip() for line in lines]
-        clean_block = "\n".join(clean_lines)
-        if clean_block:  # Only add non-empty blocks
-            blocks.append(clean_block)
+        first_line = clean_lines[0]
+        if first_line.startswith("```"):
+            blocks.append("\n".join(clean_lines))
+        elif first_line.startswith("- "):
+            blocks.append("\n".join(clean_lines))
+        elif first_line[:2].isdigit() and first_line[2] == ".":
+            blocks.append("\n".join(clean_lines))
+        else:
+             blocks.append("\n".join(clean_lines))
+            
     return blocks
 
 def block_to_block_type(block):
@@ -49,5 +59,110 @@ def block_to_block_type(block):
         return BlockType.ORDERED_LIST
     else:
         return BlockType.PARAGRAPH
+
+
+def markdown_to_html_node(markdown):
+    blocks = markdown_to_blocks(markdown)
+    parent_node = ParentNode("div", children=[])
+    for block in blocks:
+        block_type = block_to_block_type(block)
+        if block_type == BlockType.PARAGRAPH:
+            cleaned_block = " ".join(block.splitlines())
+            parent_node.children.append(ParentNode("p", text_to_children(cleaned_block)))
+            
+
+        elif block_type == BlockType.HEADING:
+            
+            heading_level, remaining_text = determine_heading_level_and_remaining_text(block)
+            parent_node.children.append(ParentNode(heading_level, text_to_children(remaining_text)))
+            
+
+        elif block_type == BlockType.ORDERED_LIST:
+           
+            children = determine_ordered_list_children(block)
+            parent_node.children.append(ParentNode("ol", children))
+            
+
+        elif block_type == BlockType.UNORDERED_LIST:
+            
+            children = determine_unordered_list_children(block)
+            parent_node.children.append(ParentNode("ul", children))
+            
+
+        elif block_type == BlockType.QUOTE:
+            parent_node.children.append(ParentNode("blockquote", text_to_children(block)))
+            
+        elif block_type == BlockType.CODE:
+            content = block.replace("```", "")
+            content = content.splitlines()
+            content = "\n".join(content[1:]) + "\n"
+            text_node = TextNode(content, TextType.CODE)
+            code_node = text_node_to_html_node(text_node)
+            pre_node = ParentNode("pre", [code_node])
+            parent_node.children.append(pre_node)
+
+    return parent_node
+
+
+def determine_unordered_list_children(text):
+    list_of_children = []
+    lines = text.split("\n")
+
+    for line in lines:
+        content = line[2:]
+        if not content:
+            continue
+        text_nodes = text_to_textnodes(content)
+        inner_list = []
+        for node in text_nodes:
+            child_node = text_node_to_html_node(node)
+            inner_list.append(child_node)
+        list_of_children.append(LeafNode("li", inner_list))
+
+    return list_of_children
+
+def determine_ordered_list_children(text):
+    list_of_children = []
+    lines = text.split("\n")
+    for line in lines:
+        content = line[line.find(".") + 2:]
+        if not content:
+            continue
+        text_nodes = text_to_textnodes(content)
+        inner_list = []
+        for node in text_nodes:
+            child_node = text_node_to_html_node(node)
+            inner_list.append(child_node)
+
+        list_of_children.append(LeafNode("li", inner_list))
         
+    return list_of_children
+
+def determine_heading_level_and_remaining_text(text):
+    counter = 0
+    for letter in text:
+        if letter != ("#"):
+            break
+        counter += 1
+
+    if counter == 1:
+        return "h1", text[2:]
+    elif counter == 2:
+        return "h2", text[3:]
+    elif counter == 3:
+        return "h3", text[4:]
+    elif counter == 4:
+        return "h4", text[5:]
+    elif counter == 5:
+        return "h5", text[6:]
+    elif counter == 6:
+        return "h6", text[7:]
+
+
+def text_to_children(text):
+    text_nodes = text_to_textnodes(text)
+    children = []
+    for text_node in text_nodes:
+        children.append(text_node_to_html_node(text_node))
+    return children
      
