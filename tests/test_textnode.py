@@ -68,7 +68,14 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(html_node.tag, "img")
         self.assertEqual(html_node.props, {'src': 'www.bootdev.com', 'alt': 'This is an image node'})
 
+    def test_extracts_title(self):
+        self.assertEqual(extract_title("# Hello World"), "Hello World")
+
+    def test_strips_whitespace(self):
+        self.assertEqual(extract_title("#    Trim Me   "), "Trim Me")
+
+    def test_raises_if_no_title(self):
+        with self.assertRaises(Exception):
+            extract_title("No title here")
 
 
-if __name__ == "__main__":
-    unittest.main()

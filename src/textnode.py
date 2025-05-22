@@ -24,7 +24,14 @@ class TextNode():
     def __repr__(self):
         return f"TextNode({self.text}, {self.text_type.value}, {self.url})"
     
-    
+
+def extract_title(markdown: str) -> str:
+    for line in markdown.splitlines():
+        if line.strip().startswith("# "):  # H1 header
+            return line.strip()[2:].strip()
+    raise Exception("No H1 header found in markdown")
+
+
 def text_node_to_html_node(text_node):
     match (text_node.text_type):
         case TextType.TEXT:

@@ -116,8 +116,8 @@ def determine_unordered_list_children(text):
         inner_list = []
         for node in text_nodes:
             child_node = text_node_to_html_node(node)
-            inner_list.append(child_node)
-        list_of_children.append(LeafNode("li", inner_list))
+            inner_list.append(child_node.to_html())
+        list_of_children.append(LeafNode("li", "".join(inner_list)))
 
     return list_of_children
 
@@ -132,9 +132,9 @@ def determine_ordered_list_children(text):
         inner_list = []
         for node in text_nodes:
             child_node = text_node_to_html_node(node)
-            inner_list.append(child_node)
+            inner_list.append(child_node.to_html())
 
-        list_of_children.append(LeafNode("li", inner_list))
+        list_of_children.append(LeafNode("li", "".join(inner_list)))
         
     return list_of_children
 
