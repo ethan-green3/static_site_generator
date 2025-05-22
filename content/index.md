@@ -1,46 +1,59 @@
-# Tolkien Fan Club
+# How to get the Voidwaker in OSRS
 
-![JRR Tolkien sitting](/images/tolkien.png)
+![Voidwaker](https://oldschool.runescape.wiki/images/thumb/Voidwaker.png/250px-Voidwaker.png)
 
-Here's the deal, **I like Tolkien**.
+The **Voidwaker** is one of the most powerful special attack weapons in _Old School RuneScape_, known for its unique ability to deal a **guaranteed high-damage hit** split between magic and melee. This makes it a deadly weapon in PvP scenarios and great for PvM encounters against bosses with high defence.
 
-> "I am in fact a Hobbit in all but size."
->
-> -- J.R.R. Tolkien
+## How to get the Voidwaker?
 
-## Blog posts
+The Voidwaker is assembled from three pieces:
 
-- [Why Glorfindel is More Impressive than Legolas](/blog/glorfindel)
-- [Why Tom Bombadil Was a Mistake](/blog/tom)
-- [The Unparalleled Majesty of "The Lord of the Rings"](/blog/majesty)
+1. Voidwaker Blade 
+2. Voidwaker Hilt 
+3. Voidwaker Gem 
 
-## Reasons I like Tolkien
+Each piece is dropped by a high-level **Wilderness boss** at a rate of 1/360 or its safer variant in the singles+ caves below level 30 wildernss at a rate of 1/912. Once you’ve obtained all three pieces, you can **combine them** by speaking to _Madam Sikaro_ in the _Ferox Enclave_ dungeon for a fee of 500,000 coins.
 
-- You can spend years studying the legendarium and still not understand its depths
-- It can be enjoyed by children and adults alike
-- Disney _didn't ruin it_ (okay, but Amazon might have)
-- It created an entirely new genre of fantasy
+> "If you gaze long enough into the abyss, the abyss also gazes into you."
 
-## My favorite characters (in order)
+## Requirements
 
-1. Gandalf
-2. Bilbo
-3. Sam
-4. Glorfindel
-5. Galadriel
-6. Elrond
-7. Thorin
-8. Sauron
-9. Aragorn
+- **85+ Attack/Strength** recommended for Vet'ion/Calverion and Venenatis/Spindel
+- **85+ Ranged/Magic** recommend for Callisto/Artio depending on your method of choice
+- **Hard Wilderness Diaries** are _strongly_ recommended for instant teleports
+- One Click Teleport (Royal seed pod)
+- Optional: **alt scout** (highly recommened for more relaxed gameplay)
 
-Here's what `elflang` looks like (the perfect coding language):
+## How to Obtain Voidwaker Pieces
 
-```
-func main(){
-    fmt.Println("Aiya, Ambar!")
-}
-```
+The three Voidwaker components are obtained from three separate Wilderness bosses (or their weaker, singles+ versions):
 
-Want to get in touch? [Contact me here](/contact).
+**I recommened killing the versions in under 30 wildy to be able to one click teleport away**
 
-This site was generated with a custom-built [static site generator](https://www.boot.dev/courses/build-static-site-generator-python) from the course on [Boot.dev](https://www.boot.dev).
+### Voidwaker Blade
+
+- **Dropped by:** Vet'ion or [Calvar'ion](./bosses/vetion.html)
+
+### Voidwaker Hilt
+
+- **Dropped by:** Callisto or [Artio](./bosses/callisto.html)
+
+### Voidwaker Gem
+
+- **Dropped by:** Venenatis or [Spindel](./bosses/venenatis.html)
+
+## Links to Boss Guides
+
+- Callisto/Artio - Voidwaker Hilt [Callisto / Artio Guide](./bosses/callisto.html)
+- Venenatis/Spindel - Voidwaker Gem [Venenatis / Spindel Guide](./bosses/venenatis.html)
+- Vet'ion/Calvar'ion - Voidwaker Blade [Vet'ion / Calvar'ion Guide](./bosses/vetion.html)   
+
+## Tips for Wilderness Bossing
+
+- Always bring **one click teleport escape** (Royal Seed Pod)
+- Never bring anything you aren't willing to lose
+- Make use of trouver parchments for protecting untradables
+- Use **alt accounts to scout** the boss entrances
+- Avoid bossing during peak PvP hours
+
+

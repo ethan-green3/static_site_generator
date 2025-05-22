@@ -6,6 +6,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
     for old_node in old_nodes:
         # To avoid overwriting previus bold, italic, code nodes to text nodes
+        print(old_node)
         if old_node.text_type != TextType.TEXT:
             new_nodes.append(old_node)
             continue
