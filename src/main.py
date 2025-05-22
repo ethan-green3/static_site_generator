@@ -12,37 +12,37 @@ def generate_page(from_path, template_path, dest_path):
     try:
         with open(from_path, "r") as f:
             md_content = f.read()
-        print("✔️ Markdown loaded.")
+        print("Markdown loaded.")
     except Exception as e:
-        print(f"❌ Failed to read markdown: {e}")
+        print(f"Failed to read markdown: {e}")
         return
 
     # Step 2: Read Template
     try:
         with open(template_path, "r") as f:
             template = f.read()
-        print("✔️ Template loaded.")
+        print("Template loaded.")
     except Exception as e:
-        print(f"❌ Failed to read template: {e}")
+        print(f"Failed to read template: {e}")
         return
 
     # Step 3: Convert Markdown
     try:
         title = extract_title(md_content)
-        print(f"✔️ Title extracted: {title}")
+        print(f"Title extracted: {title}")
         html_content = markdown_to_html_node(md_content).to_html()
         print(html_content)
-        print("✔️ HTML generated.")
+        print("HTML generated.")
     except Exception as e:
-        print(f"❌ Error processing markdown: {e}")
+        print(f"Error processing markdown: {e}")
         return
 
     # Step 4: Fill Template
     try:
         full_page = template.replace("{{ Title }}", title).replace("{{ Content }}", html_content)
-        print("✔️ Full HTML page constructed.")
+        print("Full HTML page constructed.")
     except Exception as e:
-        print(f"❌ Error formatting HTML page: {e}")
+        print(f"Error formatting HTML page: {e}")
         return
 
     # Step 5: Write Output
@@ -54,9 +54,9 @@ def generate_page(from_path, template_path, dest_path):
 
         with open(dest_path, "w") as f:
             f.write(full_page)
-        print(f"✅ Successfully wrote: {dest_path}")
+        print(f"Successfully wrote: {dest_path}")
     except Exception as e:
-        print(f"❌ Failed to write HTML file: {e}")
+        print(f"Failed to write HTML file: {e}")
 
 
 

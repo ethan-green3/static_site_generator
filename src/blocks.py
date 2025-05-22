@@ -90,7 +90,8 @@ def markdown_to_html_node(markdown):
             
 
         elif block_type == BlockType.QUOTE:
-            parent_node.children.append(ParentNode("blockquote", text_to_children(block)))
+            cleaned_block = process_blockquote(block)
+            parent_node.children.append(ParentNode("blockquote", text_to_children(cleaned_block)))
             
         elif block_type == BlockType.CODE:
             content = block.replace("```", "")
@@ -103,6 +104,21 @@ def markdown_to_html_node(markdown):
 
     return parent_node
 
+
+def process_blockquote(block):
+    lines = block.split("\n")
+    # Remove the '>' characters and trim whitespace
+    content = [line.lstrip('>').strip() for line in lines]
+    
+    # Find the quote part (before attribution)
+    quote_text = []
+    for line in content:
+        if line.startswith("--") or line.startswith("—"):
+            break  # Stop when we reach attribution
+        quote_text.append(line)
+    
+    # Join the quote part only
+    return " ".join(quote_text)
 
 def determine_unordered_list_children(text):
     list_of_children = []
