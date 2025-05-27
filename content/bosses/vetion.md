@@ -2,7 +2,7 @@
 
 ![Vet'ion](https://oldschool.runescape.wiki/images/thumb/Vet%27ion.png/250px-Vet%27ion.png)
 
-**Vet'ion/Cavar'ion** is a powerful skeletal boss deep in the Wilderness that drops the **Voidwaker Blade**. A safer singles+ alternative is **Calvar'ion**, located in the boss cave.
+**Vet'ion/Cavar'ion** is a powerful skeletal boss deep in the Wilderness that drops the **Voidwaker Blade**. A safer singles+ alternative is **Calvar'ion**, located in the Skeletal Tomb.
 
 > "Hold still so I can smite you!"
 
